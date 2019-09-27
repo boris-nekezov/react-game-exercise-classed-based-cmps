@@ -1,25 +1,39 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+import Players from './components/Players/Players';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        Monster Slayer
+
+        <Players />
+
+      <section className="row controls">
+          <div className="small-12 columns">
+            <button id="attack">ATTACK</button> 
+            <button id="special-attack">SPECIAL ATTACK</button> 
+            <button id="heal">HEAL</button> 
+            <button id="give-up">GIVE UP</button>
+          </div>
+      </section>
+      
+      <section className="row log">
+          <div className="small-12 columns">
+              <ul>
+                  <li className="monster-turn">
+                      Monster hits Player for 9
+                  </li>
+              </ul>
+          </div>
+      </section>
+
+
+
+
+
     </div>
+    // /.App
   );
 }
 
