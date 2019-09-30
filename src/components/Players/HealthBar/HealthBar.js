@@ -10,9 +10,10 @@ class HealthBar extends Component {
                     style={{
                         backgroundColor: 'green',
                         margin: '0',
-                        color: 'white'
+                        color: 'white',
+                        width: `${this.props.healthPoints}%`
                     }}>
-                    100 hp make this dynamic later
+                    {this.props.healthPoints}
                 </div>
             </div>
         );
