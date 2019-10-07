@@ -22,7 +22,38 @@ class MonsterSlayer extends Component {
 
     attackHandler = () => {
         let damage = this.calculateDamage(3, 10);
-        this.state.monsterHealthPoints -= damage;
+
+        
+        this.setState({
+            // set monster hp
+            monsterHealthPoints: this.state.monsterHealthPoints -= damage,
+            // add message at the log
+            turns: [{
+                isPlayer: true, 
+                text: 'Player hits Monster for' + damage    
+            },
+                ...this.state.turns
+            ]
+            
+        });
+        console.log('monsterHealthPoints', this.state.monsterHealthPoints);
+        console.log('turns', this.state.turns);
+      
+        // if checkwin is true then we return so we don't get to next line where monster attacks
+        if(this.checkWin()) {
+            return;
+        }
+        this.monsterAttackHandler();
+    }
+
+    monsterAttackHandler = () => {
+        console.log('monster attacks!');
+        let damage = this.calculateDamage(5, 12);
+
+        // set players hp
+        this.setState({
+            playerHealthPoints: this.state.playerHealthPoints -= damage
+        })
     }
 
     // create random number based on min and max
