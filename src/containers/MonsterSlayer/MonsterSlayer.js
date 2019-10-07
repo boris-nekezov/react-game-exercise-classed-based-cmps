@@ -60,7 +60,8 @@ class MonsterSlayer extends Component {
                     monsterHP={this.state.monsterHealthPoints} />
                 <Controls 
                     gameStarted={this.state.gameIsRunning} 
-                    start={this.startGameHandler}/>
+                    start={this.startGameHandler}
+                    attacked={this.attackHandler} />
                 {/* if there are turns display log */}
                 {this.state.turns.length > 0 ? <Log /> : null}
 

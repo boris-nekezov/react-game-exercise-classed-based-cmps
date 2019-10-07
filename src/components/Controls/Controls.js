@@ -13,7 +13,9 @@ class Controls extends Component {
             console.log('Started!');
             gameControls = (
                 <div className="small-12 columns">
-                    <button className={[classes.Button, classes.Attack].join(' ')}>ATTACK</button> 
+                    <button 
+                        className={[classes.Button, classes.Attack].join(' ')}
+                        onClick={this.props.attacked}>ATTACK</button> 
                     <button className={[classes.Button, classes.SpecialAttack].join(' ')}>SPECIAL ATTACK</button> 
                     <button className={[classes.Button, classes.Heal].join(' ')}>HEAL</button> 
                     <button className={[classes.Button, classes.GiveUp].join(' ')}>GIVE UP</button>
