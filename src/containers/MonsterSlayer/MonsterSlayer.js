@@ -22,23 +22,44 @@ class MonsterSlayer extends Component {
 
     attackHandler = () => {
         let damage = this.calculateDamage(3, 10);
-
-        
-        this.setState({
-            // set monster hp
-            monsterHealthPoints: this.state.monsterHealthPoints -= damage,
-            // add message at the log
-            turns: [{
-                isPlayer: true, 
-                text: 'Player hits Monster for' + damage    
-            },
-                ...this.state.turns
-            ]
-            
-        });
-        console.log('monsterHealthPoints', this.state.monsterHealthPoints);
-        console.log('turns', this.state.turns);
       
+        const oldTurns = [this.state.turns];
+        console.log('oldTurns', oldTurns);
+
+        let newTurn = {
+            isPlayer: true, 
+            text: 'Player hits Monster for' + damage    
+        };
+        console.log('newTurn', newTurn);
+
+        let updatedTurns = [...this.state.turns];
+
+        updatedTurns.unshift(newTurn);
+
+        console.log('updatedTurns', updatedTurns);
+        this.setState({
+            turns: updatedTurns
+        })
+        console.log('turns after', this.state.turns);
+        // old turns
+        // new turn
+        // updated turns
+        // setState turns: updatedTurns
+
+        // this.setState({
+        //     // set monster hp
+        //     monsterHealthPoints: this.state.monsterHealthPoints -= damage,
+        //     // add message at the log
+        //     turns: [{
+        //         isPlayer: true, 
+        //         text: 'Player hits Monster for' + damage    
+        //     },
+        //     // and add the rest of the objects left in the turns array
+        //         ...this.state.turns
+        //     ]
+            
+        // });
+
         // if checkwin is true then we return so we don't get to next line where monster attacks
         if(this.checkWin()) {
             return;
@@ -52,7 +73,15 @@ class MonsterSlayer extends Component {
 
         // set players hp
         this.setState({
-            playerHealthPoints: this.state.playerHealthPoints -= damage
+            playerHealthPoints: this.state.playerHealthPoints -= damage,
+            // add message at the log
+            // turns: [{
+            //     isPlayer: false,
+            //     text: 'Monster hits Player for ' + damage
+            // },
+            // // and add the rest of the objects left in the turns array
+            //     ...this.state.turns
+            // ]
         })
     }
 
@@ -94,7 +123,7 @@ class MonsterSlayer extends Component {
                     start={this.startGameHandler}
                     attacked={this.attackHandler} />
                 {/* if there are turns display log */}
-                {this.state.turns.length > 0 ? <Log /> : null}
+                {this.state.turns.length > 0 ? <Log turnsLog={this.state.turns}/> : null}
 
             </div>
         );
