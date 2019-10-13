@@ -3,7 +3,7 @@ import classes from './Log.module.css';
 
 class Log extends Component {
     logMethod = () => {
-        // console.log('this.props.turnsLog', this.props.turnsLog);
+        console.log('this.props.turnsLog', this.props.turnsLog);
     }
     
     render() {
@@ -15,7 +15,7 @@ class Log extends Component {
                     <ul onClick={this.logMethod()}>
                         {this.props.turnsLog.map((turn, index) => (
                             <li key={index}>
-                                some turn
+                                some turn {turn.text}
                             </li>
                         ))}
                         <li className={classes.MonsterTurn}>

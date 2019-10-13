@@ -21,44 +21,24 @@ class MonsterSlayer extends Component {
     }
 
     attackHandler = () => {
-        let damage = this.calculateDamage(3, 10);
+        const damage = this.calculateDamage(3, 10);
       
-        const oldTurns = [this.state.turns];
-        console.log('oldTurns', oldTurns);
-
-        let newTurn = {
+        // set turns
+        const oldTurns = this.state.turns;
+        const newTurn = {
             isPlayer: true, 
             text: 'Player hits Monster for' + damage    
         };
-        console.log('newTurn', newTurn);
-
-        let updatedTurns = [...this.state.turns];
-
+        const updatedTurns = [...oldTurns];
         updatedTurns.unshift(newTurn);
 
-        console.log('updatedTurns', updatedTurns);
-        this.setState({
-            turns: updatedTurns
-        })
-        console.log('turns after', this.state.turns);
-        // old turns
-        // new turn
-        // updated turns
-        // setState turns: updatedTurns
+        let oldMonsterHP = this.state.monsterHealthPoints;
+        const updatedMonsterHP = oldMonsterHP -= damage;
 
-        // this.setState({
-        //     // set monster hp
-        //     monsterHealthPoints: this.state.monsterHealthPoints -= damage,
-        //     // add message at the log
-        //     turns: [{
-        //         isPlayer: true, 
-        //         text: 'Player hits Monster for' + damage    
-        //     },
-        //     // and add the rest of the objects left in the turns array
-        //         ...this.state.turns
-        //     ]
-            
-        // });
+        this.setState({
+            turns: updatedTurns,
+            monsterHealthPoints: updatedMonsterHP
+        });
 
         // if checkwin is true then we return so we don't get to next line where monster attacks
         if(this.checkWin()) {
@@ -69,19 +49,23 @@ class MonsterSlayer extends Component {
 
     monsterAttackHandler = () => {
         console.log('monster attacks!');
-        let damage = this.calculateDamage(5, 12);
-
+        const damage = this.calculateDamage(5, 12);
+        
+        // set turns
+        const oldTurns = this.state.turns;
+        const newTurn = {
+            isPlayer: false,
+            text: 'Monster hits Player for ' + damage
+        }
+        const updatedTurns = [...oldTurns];
+        updatedTurns.unshift(newTurn);
+        
         // set players hp
+        let oldPlayerHP = this.state.playerHealthPoints;
+        const updatedPlayerHP = oldPlayerHP -= damage;
         this.setState({
-            playerHealthPoints: this.state.playerHealthPoints -= damage,
-            // add message at the log
-            // turns: [{
-            //     isPlayer: false,
-            //     text: 'Monster hits Player for ' + damage
-            // },
-            // // and add the rest of the objects left in the turns array
-            //     ...this.state.turns
-            // ]
+            playerHealthPoints: updatedPlayerHP,
+            turns: updatedTurns
         })
     }
 
