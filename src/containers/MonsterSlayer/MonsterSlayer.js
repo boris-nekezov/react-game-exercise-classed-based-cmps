@@ -36,9 +36,10 @@ class MonsterSlayer extends Component {
             text: 'Player hits Monster for' + damage    
         };
         const updatedTurns = [newTurn, ...oldTurns];
+        
         // set monster hp
         let oldMonsterHP = monsterHealthPoints;
-        const updatedMonsterHP = oldMonsterHP -= damage;
+        const updatedMonsterHP = oldMonsterHP - damage;
 
         this.setState({
             turns: updatedTurns,
@@ -65,7 +66,7 @@ class MonsterSlayer extends Component {
         
         // set players hp
         let oldPlayerHP = playerHealthPoints;
-        const updatedPlayerHP = oldPlayerHP -= damage;
+        const updatedPlayerHP = oldPlayerHP - damage;
 
         this.setState({
             playerHealthPoints: updatedPlayerHP,
