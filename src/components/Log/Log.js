@@ -2,28 +2,22 @@ import React, { Component } from 'react';
 import classes from './Log.module.css';
 
 class Log extends Component {
-    logMethod = () => {
-        console.log('this.props.turnsLog', this.props.turnsLog);
-    }
+
     
     render() {
+        const { Log, PlayerTurn, MonsterTurn } = classes;
+        const { turnsLog } = this.props;
+       
+
         return (
-            <section className={["row", classes.Log].join(' ')}>
+            <section className={`row ${Log}`}>
                 <div className="small-12 columns">
-                    <div></div>
-                    
-                    <ul onClick={this.logMethod()}>
-                        {this.props.turnsLog.map((turn, index) => (
-                            <li key={index}>
+                    <ul>
+                        {turnsLog.map((turn, index) => (
+                            <li key={index} className={turn.isPlayer ? PlayerTurn : MonsterTurn}>
                                 some turn {turn.text}
                             </li>
                         ))}
-                        <li className={classes.MonsterTurn}>
-                                    Monster hits Player for 9
-                                </li>
-                                <li className={classes.PlayerTurn}>
-                                    Monster hits Player for 9
-                                </li>
                     </ul>
                 </div>
             </section>
