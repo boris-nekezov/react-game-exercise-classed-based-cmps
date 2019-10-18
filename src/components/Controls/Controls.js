@@ -3,28 +3,29 @@ import classes from './Controls.module.css';
 
 class Controls extends Component {
     render() {
+        const { Button, StartGame, Attack, SpecialAttack, Heal, GiveUp, Controls } = classes;
+
         let gameControls = (
                 <button 
-                    className={[classes.Button, classes.StartGame].join(' ')}
+                    className={`${Button} ${StartGame}`}
                     onClick={this.props.start}>START NEW GAME</button>
         );
         // if gameStarted is true start game markup
         if (this.props.gameStarted){
-            console.log('Started!');
             gameControls = (
                 <div className="small-12 columns">
                     <button 
-                        className={[classes.Button, classes.Attack].join(' ')}
+                        className={`${Button} ${Attack}`}
                         onClick={this.props.attacked}>ATTACK</button> 
-                    <button className={[classes.Button, classes.SpecialAttack].join(' ')}>SPECIAL ATTACK</button> 
-                    <button className={[classes.Button, classes.Heal].join(' ')}>HEAL</button> 
-                    <button className={[classes.Button, classes.GiveUp].join(' ')}>GIVE UP</button>
+                    <button className={`${Button} ${SpecialAttack}`}>SPECIAL ATTACK</button> 
+                    <button className={`${Button} ${Heal}`}>HEAL</button> 
+                    <button className={`${Button} ${GiveUp}`}>GIVE UP</button>
                 </div>
             );
         } 
 
         return (
-            <section className={['row', classes.Controls].join(' ')}>
+            <section className={`row ${Controls}`}>
                 {gameControls}
             </section>
         );
