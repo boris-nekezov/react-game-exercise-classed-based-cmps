@@ -3,6 +3,11 @@ import Players from '../../components/Players/Players';
 import Controls from '../../components/Controls/Controls';
 import Log from '../../components/Log/Log';
 
+// create random number based on min and max
+const calculateDamage = (min, max) => {
+    return Math.max(Math.floor(Math.random() * max) + 1, min)
+}
+
 class MonsterSlayer extends Component {
     state = {
         playerHealthPoints: 100,
@@ -21,18 +26,18 @@ class MonsterSlayer extends Component {
     }
 
     attackHandler = () => {
-        const damage = this.calculateDamage(3, 10);
-      
+        const damage = calculateDamage(3, 10);
+        const { turns, monsterHealthPoints } = this.state;
+
         // set turns
-        const oldTurns = this.state.turns;
+        const oldTurns = turns;
         const newTurn = {
             isPlayer: true, 
             text: 'Player hits Monster for' + damage    
         };
-        const updatedTurns = [...oldTurns];
-        updatedTurns.unshift(newTurn);
-
-        let oldMonsterHP = this.state.monsterHealthPoints;
+        const updatedTurns = [newTurn, ...oldTurns];
+        // set monster hp
+        let oldMonsterHP = monsterHealthPoints;
         const updatedMonsterHP = oldMonsterHP -= damage;
 
         this.setState({
@@ -44,39 +49,35 @@ class MonsterSlayer extends Component {
         if(this.checkWin()) {
             return;
         }
-        this.monsterAttackHandler();
+        this.monsterAttackHandler(updatedTurns);
     }
 
-    monsterAttackHandler = () => {
-        console.log('monster attacks!');
-        const damage = this.calculateDamage(5, 12);
-        
+    monsterAttackHandler = (oldTurns) => {
+        const damage = calculateDamage(5, 12);
+        const { playerHealthPoints } = this.state;        
+
         // set turns
-        const oldTurns = this.state.turns;
         const newTurn = {
             isPlayer: false,
             text: 'Monster hits Player for ' + damage
         }
-        const updatedTurns = [...oldTurns];
-        updatedTurns.unshift(newTurn);
+        const updatedTurns = [newTurn, ...oldTurns];
         
         // set players hp
-        let oldPlayerHP = this.state.playerHealthPoints;
+        let oldPlayerHP = playerHealthPoints;
         const updatedPlayerHP = oldPlayerHP -= damage;
+
         this.setState({
             playerHealthPoints: updatedPlayerHP,
             turns: updatedTurns
         })
     }
 
-    // create random number based on min and max
-    calculateDamage = (min, max) => {
-        return Math.max(Math.floor(Math.random() * max) + 1, min)
-    }
-
     checkWin = () => {
+        const { playerHealthPoints, monsterHealthPoints } = this.state;
+
         // if player wins
-        if (this.state.monsterHealthPoints <= 0) {
+        if (monsterHealthPoints <= 0) {
             if ( window.confirm('You won! New Game?') ) {
                 this.startGameHandler();
             } else {
@@ -84,7 +85,7 @@ class MonsterSlayer extends Component {
             }
             return true; // there is win 
         // id monster wins
-        } else if (this.state.playerHealthPoints <= 0) {
+        } else if (playerHealthPoints <= 0) {
             if ( window.confirm('You Lost! New Game?')) {
                 this.startGameHandler();
             } else {
