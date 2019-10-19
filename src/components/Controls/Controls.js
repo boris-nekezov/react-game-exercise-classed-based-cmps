@@ -17,7 +17,9 @@ class Controls extends Component {
                     <button 
                         className={`${Button} ${Attack}`}
                         onClick={this.props.attacked}>ATTACK</button> 
-                    <button className={`${Button} ${SpecialAttack}`}>SPECIAL ATTACK</button> 
+                    <button 
+                        className={`${Button} ${SpecialAttack}`}
+                        onClick={this.props.specialAttacked}>SPECIAL ATTACK</button> 
                     <button className={`${Button} ${Heal}`}>HEAL</button> 
                     <button className={`${Button} ${GiveUp}`}>GIVE UP</button>
                 </div>

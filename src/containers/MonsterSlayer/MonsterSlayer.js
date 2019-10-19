@@ -29,7 +29,6 @@ class MonsterSlayer extends Component {
         const damage = calculateDamage(3, 10);
         const { turns, monsterHealthPoints } = this.state;
 
-        // set turns
         const oldTurns = turns;
         const newTurn = {
             isPlayer: true, 
@@ -37,7 +36,6 @@ class MonsterSlayer extends Component {
         };
         const updatedTurns = [newTurn, ...oldTurns];
         
-        // set monster hp
         let oldMonsterHP = monsterHealthPoints;
         const updatedMonsterHP = oldMonsterHP - damage;
 
@@ -51,6 +49,35 @@ class MonsterSlayer extends Component {
             return;
         }
         this.monsterAttackHandler(updatedTurns);
+    }
+
+    specialAttackHandler = () => {
+        const damage = calculateDamage(10, 20);
+        const { turns, monsterHealthPoints } = this.state;
+        
+        const oldTurns = turns;
+        const newTurn = {
+            isPlayer: true,
+            text: 'Player hits Monster hard for ' + damage
+        }
+        const updatedTurns = [newTurn, ...oldTurns];
+
+       
+        let oldMonsterHP = monsterHealthPoints;
+        const updatedMonsterHP = oldMonsterHP - damage;
+        console.log('damage', damage, monsterHealthPoints, updatedMonsterHP);
+
+        this.setState({
+            turns: updatedTurns,
+            monsterHealthPoints: updatedMonsterHP
+        });
+
+        if (this.checkWin()) {
+            return;
+        }
+
+        this.monsterAttackHandler(oldTurns);
+     
     }
 
     monsterAttackHandler = (oldTurns) => {
@@ -107,7 +134,8 @@ class MonsterSlayer extends Component {
                 <Controls 
                     gameStarted={this.state.gameIsRunning} 
                     start={this.startGameHandler}
-                    attacked={this.attackHandler} />
+                    attacked={this.attackHandler}
+                    specialAttacked={this.specialAttackHandler} />
                 {/* if there are turns display log */}
                 {this.state.turns.length > 0 ? <Log turnsLog={this.state.turns}/> : null}
 
