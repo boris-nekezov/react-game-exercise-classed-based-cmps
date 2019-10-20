@@ -16,10 +16,10 @@ class Controls extends Component {
                 <div className="small-12 columns">
                     <button 
                         className={`${Button} ${Attack}`}
-                        onClick={this.props.attacked}>ATTACK</button> 
+                        onClick={() => this.props.attacked(3, 10)}>ATTACK</button> 
                     <button 
                         className={`${Button} ${SpecialAttack}`}
-                        onClick={this.props.specialAttacked}>SPECIAL ATTACK</button> 
+                        onClick={() => this.props.attacked(5, 12)}>SPECIAL ATTACK</button> 
                     <button className={`${Button} ${Heal}`}>HEAL</button> 
                     <button className={`${Button} ${GiveUp}`}>GIVE UP</button>
                 </div>
