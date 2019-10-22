@@ -17,10 +17,15 @@ class Controls extends Component {
                     <button 
                         className={`${Button} ${Attack}`}
                         onClick={() => this.props.attacked(3, 10)}>ATTACK</button> 
+                    
                     <button 
                         className={`${Button} ${SpecialAttack}`}
                         onClick={() => this.props.attacked(5, 12)}>SPECIAL ATTACK</button> 
-                    <button className={`${Button} ${Heal}`}>HEAL</button> 
+                    
+                    <button 
+                        className={`${Button} ${Heal}`}
+                        onClick={this.props.healed}>HEAL</button> 
+                    
                     <button 
                         className={`${Button} ${GiveUp}`}
                         onClick={this.props.gaveUp}>GIVE UP</button>

@@ -56,13 +56,37 @@ class MonsterSlayer extends Component {
             playerHealthPoints: updatedPlayerHP,
             monsterHealthPoints: updatedMonsterHP
         });
-     
+    }
+
+    heal = () => {
+        let { turns, playerHealthPoints } = this.state;
+        if (playerHealthPoints <= 90) {
+            const healSize = 10
+            const monsterDamage = calculateDamage(5, 12);
+            const oldTurns = turns;
+
+            const playerNewTurn = {
+                isPlayer: true,
+                text: `Player heals himself for ${healSize}`
+            }
+
+            const monsterNewTurn = {
+                isPlayer: false,
+                text: `Monster hits Player for ${monsterDamage}`
+            }
+
+            const updatedTurns = [playerNewTurn, monsterNewTurn, ...oldTurns];
+
+            this.setState({ 
+                playerHealthPoints: (playerHealthPoints += 10) - monsterDamage,
+                turns: updatedTurns
+            });   
+        }
+      
     }
 
     giveUp = () => {
-        this.setState({
-            gameIsRunning: false
-        });
+        this.setState({ gameIsRunning: false });
     }
 
     checkWin = (playerHP, monsterHP) => {
@@ -84,14 +108,12 @@ class MonsterSlayer extends Component {
                 return true; // there is win
             }
             return false; // no win
-  
     } 
 
     render () {
         const { playerHealthPoints, monsterHealthPoints, gameIsRunning, turns } = this.state;
         return (
             <div>
-                Monster Slayer
                 <Players 
                     playerHP={playerHealthPoints}
                     monsterHP={monsterHealthPoints} />
@@ -100,9 +122,10 @@ class MonsterSlayer extends Component {
                     start={this.startGameHandler}
                     attacked={this.attackHandler}
                     specialAttacked={this.specialAttackHandler} 
-                    gaveUp={this.giveUp} />
+                    healed={this.heal}
+                    gaveUp={this.giveUp} /> 
                 {/* if there are turns display log */}
-                {this.state.turns.length > 0 ? <Log turnsLog={turns}/> : null}
+                {turns.length > 0 ? <Log turnsLog={turns}/> : null}
 
             </div>
         );
