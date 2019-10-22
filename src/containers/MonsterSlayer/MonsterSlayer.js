@@ -26,9 +26,9 @@ class MonsterSlayer extends Component {
     }
 
     attackHandler = (min, max) => {
+        const { turns, monsterHealthPoints, playerHealthPoints } = this.state;
         const playerDamage = calculateDamage(min, max);
         const monsterDamage = calculateDamage(5, 12);
-        const { turns, monsterHealthPoints, playerHealthPoints } = this.state;
         const oldTurns = turns;
         const oldPlayerHP = playerHealthPoints;
         const oldMonsterHP = monsterHealthPoints;
@@ -57,6 +57,12 @@ class MonsterSlayer extends Component {
             monsterHealthPoints: updatedMonsterHP
         });
      
+    }
+
+    giveUp = () => {
+        this.setState({
+            gameIsRunning: false
+        });
     }
 
     checkWin = (playerHP, monsterHP) => {
@@ -93,7 +99,8 @@ class MonsterSlayer extends Component {
                     gameStarted={gameIsRunning} 
                     start={this.startGameHandler}
                     attacked={this.attackHandler}
-                    specialAttacked={this.specialAttackHandler} />
+                    specialAttacked={this.specialAttackHandler} 
+                    gaveUp={this.giveUp} />
                 {/* if there are turns display log */}
                 {this.state.turns.length > 0 ? <Log turnsLog={turns}/> : null}
 
