@@ -3,17 +3,19 @@ import classes from './HealthBar.module.css';
 
 class HealthBar extends Component {
     render() {
+        const { HealthBar } = classes;
+        const { healthPoints } = this.props;
         return (
-            <div className={classes.HealthBar}>
+            <div className={HealthBar}>
                 <div
-                    className={[classes.HealthBar, 'text-center'].join(' ')}
+                    className={`${HealthBar} text-center`}
                     style={{
                         backgroundColor: 'green',
                         margin: '0',
                         color: 'white',
-                        width: `${this.props.healthPoints}%`
+                        width: `${healthPoints}%`
                     }}>
-                    {this.props.healthPoints}
+                    {healthPoints}
                 </div>
             </div>
         );

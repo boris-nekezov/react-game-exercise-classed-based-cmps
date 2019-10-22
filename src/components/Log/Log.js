@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import classes from './Log.module.css';
 
 class Log extends Component {
-
-    
     render() {
         const { Log, PlayerTurn, MonsterTurn } = classes;
         const { turnsLog } = this.props;
-       
 
         return (
             <section className={`row ${Log}`}>
