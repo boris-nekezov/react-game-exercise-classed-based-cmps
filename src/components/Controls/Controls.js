@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
 import classes from './Controls.module.css';
+import STATS from '../../utils/stats';
+
+const { damage, bigDamage } = STATS;
 
 class Controls extends Component {
     render() {
         const { Button, StartGame, Attack, SpecialAttack, Heal, GiveUp, Controls } = classes;
-        const { start, attacked, healed, gaveUp } = this.props;
+        const { start, attacked, healed, gaveUp, gameStarted } = this.props;
         let gameControls = (
             <button 
                 className={`${Button} ${StartGame}`}
                 onClick={start}>START NEW GAME</button>
         );
         // if gameStarted is true start game markup
-        if (this.props.gameStarted){
+        if (gameStarted){
             gameControls = (
                 <div className="small-12 columns">
                     {/* atack */}
                     <button 
                         className={`${Button} ${Attack}`}
-                        onClick={() => attacked(3, 10)}>ATTACK</button> 
+                        onClick={() => attacked(...damage)}>ATTACK</button> 
                     {/* special attack */}
                     <button 
                         className={`${Button} ${SpecialAttack}`}
-                        onClick={() => attacked(5, 12)}>SPECIAL ATTACK</button>
+                        onClick={() => attacked(...bigDamage)}>SPECIAL ATTACK</button>
                     {/* heal */}
                     <button 
                         className={`${Button} ${Heal}`}

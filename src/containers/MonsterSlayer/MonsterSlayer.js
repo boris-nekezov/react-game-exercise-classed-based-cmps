@@ -2,49 +2,48 @@ import React, { Component } from 'react';
 import Players from '../../components/Players/Players';
 import Controls from '../../components/Controls/Controls';
 import Log from '../../components/Log/Log';
+// utils
+import STATS from '../../utils/stats';
+import calculateDamage from '../../utils/calculateDamage';
+import generateTurn from '../../utils/generateTurn';
 
-// create random number based on min and max
-const calculateDamage = (min, max) => {
-    return Math.max(Math.floor(Math.random() * max) + 1, min)
-}
+const {
+    gameIsRunning,
+    playerHealthPoints,
+    monsterHealthPoints,
+    turns,
+    healSize,
+    bigDamage
+} = STATS;
 
 class MonsterSlayer extends Component {
     state = {
-        playerHealthPoints: 100,
-        monsterHealthPoints: 100,
-        gameIsRunning: false,
-        turns: []
+        gameIsRunning,
+        playerHealthPoints,
+        monsterHealthPoints,
+        turns
     }
 
     startGameHandler = () => {
         this.setState({
-            gameIsRunning: true,
-            playerHealthPoints: 100,
-            monsterHealthPoints: 100,
-            turns: []
+            gameIsRunning: !gameIsRunning,
+            playerHealthPoints,
+            monsterHealthPoints,
+            turns
         });
     }
 
     attackHandler = (min, max) => {
         const { turns, monsterHealthPoints, playerHealthPoints } = this.state;
         const playerDamage = calculateDamage(min, max);
-        const monsterDamage = calculateDamage(5, 12);
-        const oldTurns = turns;
-        const oldPlayerHP = playerHealthPoints;
-        const oldMonsterHP = monsterHealthPoints;
-
-        const playerNewTurn = {
-            isPlayer: true, 
-            text: `Player hits Monster for ${playerDamage}`    
-        };
-        const monsterNewTurn = {
-            isPlayer: false,
-            text: `Monster hits Player for ${monsterDamage}`
-        }
+        const monsterDamage = calculateDamage(...bigDamage);
         
-        const updatedTurns = [playerNewTurn, monsterNewTurn, ...oldTurns];
-        const updatedPlayerHP = oldPlayerHP - monsterDamage;
-        const updatedMonsterHP = oldMonsterHP - playerDamage;
+        const playerNewTurn = generateTurn(true, 'playerHits', playerDamage);
+        const monsterNewTurn = generateTurn(false, 'monsterHits', monsterDamage);
+
+        // const updatedTurns = ;
+        const updatedPlayerHP = playerHealthPoints - monsterDamage;
+        const updatedMonsterHP = monsterHealthPoints - playerDamage;
 
         // if checkwin is true then we return so we don't get to next line where monster attacks
         if(this.checkWin(updatedPlayerHP, updatedMonsterHP)) {
@@ -52,37 +51,27 @@ class MonsterSlayer extends Component {
         }
 
         this.setState({
-            turns: updatedTurns,
             playerHealthPoints: updatedPlayerHP,
-            monsterHealthPoints: updatedMonsterHP
+            monsterHealthPoints: updatedMonsterHP,
+            turns: [playerNewTurn, monsterNewTurn, ...turns]
         });
     }
 
     heal = () => {
         let { turns, playerHealthPoints } = this.state;
         if (playerHealthPoints <= 90) {
-            const healSize = 10
-            const monsterDamage = calculateDamage(5, 12);
-            const oldTurns = turns;
+            const monsterDamage = calculateDamage(...bigDamage);
 
-            const playerNewTurn = {
-                isPlayer: true,
-                text: `Player heals himself for ${healSize}`
-            }
+            const playerNewTurn = generateTurn(true, 'playerHeals', healSize);
+            const monsterNewTurn = generateTurn(false, 'monsterHits', monsterDamage);
 
-            const monsterNewTurn = {
-                isPlayer: false,
-                text: `Monster hits Player for ${monsterDamage}`
-            }
-
-            const updatedTurns = [playerNewTurn, monsterNewTurn, ...oldTurns];
+            const updatedTurns = [playerNewTurn, monsterNewTurn, ...turns];
 
             this.setState({ 
-                playerHealthPoints: (playerHealthPoints += 10) - monsterDamage,
+                playerHealthPoints: (playerHealthPoints += healSize) - monsterDamage,
                 turns: updatedTurns
             });   
         }
-      
     }
 
     giveUp = () => {

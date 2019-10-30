@@ -12,7 +12,7 @@ class Log extends Component {
                     <ul>
                         {turnsLog.map((turn, index) => (
                             <li key={index} className={turn.isPlayer ? PlayerTurn : MonsterTurn}>
-                                some turn {turn.text}
+                                {turn.text}
                             </li>
                         ))}
                     </ul>
