@@ -65,11 +65,9 @@ class MonsterSlayer extends Component {
             const playerNewTurn = generateTurn(true, 'playerHeals', healSize);
             const monsterNewTurn = generateTurn(false, 'monsterHits', monsterDamage);
 
-            const updatedTurns = [playerNewTurn, monsterNewTurn, ...turns];
-
             this.setState({ 
                 playerHealthPoints: (playerHealthPoints += healSize) - monsterDamage,
-                turns: updatedTurns
+                turns: [playerNewTurn, monsterNewTurn, ...turns]
             });   
         }
     }
