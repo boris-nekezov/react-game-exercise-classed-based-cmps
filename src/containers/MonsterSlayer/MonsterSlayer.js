@@ -110,7 +110,6 @@ class MonsterSlayer extends Component {
                     gameStarted={gameIsRunning} 
                     start={this.startGameHandler}
                     attacked={this.attackHandler}
-                    specialAttacked={this.specialAttackHandler} 
                     healed={this.heal}
                     gaveUp={this.giveUp} /> 
                 {/* if there are turns display log */}
