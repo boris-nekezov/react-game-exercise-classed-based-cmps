@@ -10,7 +10,7 @@ const generateTurn = (isPlayer, mode, units) => {
             text = `Player heals himself for ${units}`;
             break;
         case 'monsterHits':
-            text = `Player heals himself for ${units}`;
+            text = `Monster hitss PLayer for ${units}`;
             break;
         default: 
             text = `Wrong parameter! Use of the followings: "playerHits", "playerHeals", "monsterHits"`;  
